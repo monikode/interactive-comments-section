@@ -79,7 +79,7 @@ function loadComments(element, list) {
 }
 
 const activeReply = (element, comment) => {
-  const replyArea = element.lastElementChild;
+  const replyArea = element.getElementsByClassName("reply-area")[0];
   if (replyArea.childNodes.length === 0) {
     const textarea = document.createElement("textarea");
     replyArea.append(textarea);
