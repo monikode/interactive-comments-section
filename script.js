@@ -38,10 +38,23 @@ function loadComments(element, list) {
       const votes = document.createElement("div");
       const votesUp = document.createElement("button");
       votesUp.innerText = "+";
+      votesUp.onclick = ()=> {
+        item.score += 1;
+        editReplyElement(item) 
+        votesNumber.innerText = item.score;
+   
+      };
       const votesNumber = document.createElement("div");
-      votesNumber.innerText = 0;
+      votesNumber.innerText = item.score;
       const votesDown = document.createElement("button");
       votesDown.innerText = "-";
+      votesDown.onclick = ()=> {
+        item.score -= 1;
+        editReplyElement(item) 
+        votesNumber.innerText = item.score;
+   
+      };
+
 
       votes.append(votesUp);
       votes.append(votesNumber);
@@ -184,7 +197,6 @@ function editReplyElement(comment) {
 }
 
 const deleteComment = (commentId, list) => {
-  console.log(commentId);
   list = list.filter((it) => it.id != commentId);
 
   list = list.map((item) => {
