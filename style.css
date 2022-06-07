@@ -34,6 +34,18 @@ ul {
   list-style: none;
   max-width: 864px;
   margin: 0 auto;
+  position: relative;
+}
+
+ul:not(#root):before {
+  content: "";
+  position: absolute;
+  left: 20px;
+  width: 3px;
+  height: 100%;
+  border-radius: 3px;
+
+  background-color: var(--light-gray);
 }
 
 li {
@@ -51,7 +63,7 @@ li {
 .comment-wrapper {
   display: grid;
   grid-template-areas: "votes user actions" "votes content content";
-  grid-template-columns: 30px 1fr auto;
+  grid-template-columns: auto 1fr auto;
   margin-bottom: 10px;
   gap: 10px;
 }
@@ -66,6 +78,9 @@ li {
   justify-content: center;
 
   border-radius: 5px;
+
+  width: 30px;
+  height: 70px;
 }
 
 .comment-votes > * {
@@ -91,6 +106,7 @@ li {
   grid-area: user;
   display: flex;
   align-items: center;
+  gap: 10px;
 }
 
 .comment-user img {
@@ -99,6 +115,8 @@ li {
 
 .comment-actions {
   grid-area: actions;
+  display: flex;
+  align-items: center;
 }
 
 .comment-content {
@@ -109,11 +127,13 @@ li {
   .comment-wrapper {
     display: grid;
     grid-template-areas: "user user" "content content" "votes actions";
-    grid-template-columns: 70px 1fr;
-    grid-template-rows: auto auto 30px;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto auto;
   }
 
   .comment-votes {
     flex-direction: row;
+    height: 30px;
+    width: 70px;
   }
 }
