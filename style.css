@@ -29,6 +29,15 @@ button {
   border: none;
   outline: none;
   cursor: pointer;
+
+}
+
+.reset-row {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 864px;
+  margin: 0 auto;
+  margin-bottom: 32px;
 }
 ul {
   list-style: none;

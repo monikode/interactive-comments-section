@@ -3,18 +3,17 @@ let currentUser = {};
 let lastIdCreated = 0;
 
 function getData() {
-  var dataJson = new XMLHttpRequest();
-  dataJson.overrideMimeType("application/json");
-  dataJson.open("GET", "data.json", true);
-  dataJson.onreadystatechange = function () {
-    if (dataJson.readyState === 4 && dataJson.status == "200") {
-      const response = JSON.parse(dataJson.responseText);
-      comments = response.comments;
-      currentUser = response.currentUser;
-      loadComments(document.getElementById("root"), comments);
-    }
-  };
-  dataJson.send(null);
+  const localComments = localStorage.getItem("comments");
+  const localCurrentUser = localStorage.getItem("currentUser");
+  if (localComments && localCurrentUser) {
+    comments = JSON.parse(localComments);
+    currentUser =  JSON.parse(localCurrentUser);
+  } else {
+    getFromJSON()
+  }
+
+  loadComments(document.getElementById("root"), comments);
+
 }
 
 function loadComments(element, list) {
@@ -38,23 +37,20 @@ function loadComments(element, list) {
       const votes = document.createElement("div");
       const votesUp = document.createElement("button");
       votesUp.innerText = "+";
-      votesUp.onclick = ()=> {
+      votesUp.onclick = () => {
         item.score += 1;
-        editReplyElement(item) 
+        editReplyElement(item);
         votesNumber.innerText = item.score;
-   
       };
       const votesNumber = document.createElement("div");
       votesNumber.innerText = item.score;
       const votesDown = document.createElement("button");
       votesDown.innerText = "-";
-      votesDown.onclick = ()=> {
+      votesDown.onclick = () => {
         item.score -= 1;
-        editReplyElement(item) 
+        editReplyElement(item);
         votesNumber.innerText = item.score;
-   
       };
-
 
       votes.append(votesUp);
       votes.append(votesNumber);
@@ -117,6 +113,8 @@ function loadComments(element, list) {
       }
     }
   });
+
+  updateOnLocalStorage()
 }
 
 const activeReply = (element, comment) => {
@@ -171,7 +169,7 @@ function editComment(comment, list) {
       return item;
     }
   });
-
+  updateOnLocalStorage();
   return list;
 }
 
@@ -193,6 +191,7 @@ function editReplyElement(comment) {
 
   replyArea.append(textArea);
   replyArea.append(buttonSend);
+  updateOnLocalStorage();
   return replyArea;
 }
 
@@ -209,9 +208,30 @@ const deleteComment = (commentId, list) => {
 
     return item;
   });
-
+  updateOnLocalStorage();
   return list;
 };
+
+function updateOnLocalStorage() {
+  localStorage.setItem("currentUser", JSON.stringify(currentUser));
+  localStorage.setItem("comments",  JSON.stringify(comments));
+}
+
+function getFromJSON (){
+  var dataJson = new XMLHttpRequest();
+  dataJson.overrideMimeType("application/json");
+  dataJson.open("GET", "data.json", true);
+  dataJson.onreadystatechange = function () {
+    if (dataJson.readyState === 4 && dataJson.status == "200") {
+      const response = JSON.parse(dataJson.responseText);
+      comments = response.comments;
+      currentUser = response.currentUser;
+      loadComments(document.getElementById("root"), comments);
+    }
+  };
+  dataJson.send(null);
+}
+
 document.addEventListener("DOMContentLoaded", function (e) {
   getData();
 });
