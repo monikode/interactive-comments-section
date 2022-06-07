@@ -1,0 +1,119 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap");
+
+* {
+  font-family: "Rubik", Roboto;
+}
+
+body {
+  --dark-blue: hsl(212, 24%, 26%);
+  --grayish-blue: hsl(211, 10%, 45%);
+  --light-gray: hsl(223, 19%, 93%);
+  --very-light-gray: hsl(228, 33%, 97%);
+  --white: hsl(0, 0%, 100%);
+  --moderate-blue: hsl(238, 40%, 52%);
+  --soft-red: hsl(358, 79%, 66%);
+  --light-grayish-blue: hsl(239, 57%, 85%);
+  --pale-red: hsl(357, 100%, 86%);
+
+  background-color: var(--very-light-gray);
+  padding: 0;
+  margin: 0;
+  padding: 4vmin;
+}
+#root {
+  padding-inline-start: 0;
+}
+
+button {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+ul {
+  list-style: none;
+  max-width: 864px;
+  margin: 0 auto;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+.white-card:not(:empty) {
+  background-color: var(--white);
+  border-radius: 10px;
+  padding: 2.2vw 2vw;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.comment-wrapper {
+  display: grid;
+  grid-template-areas: "votes user actions" "votes content content";
+  grid-template-columns: 30px 1fr auto;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.comment-votes {
+  grid-area: votes;
+
+  background-color: var(--light-gray);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  border-radius: 5px;
+}
+
+.comment-votes > * {
+  flex: 1;
+  align-items: center;
+  text-align: center;
+}
+
+.comment-votes button {
+  color: var(--light-grayish-blue);
+  font-weight: 700;
+}
+
+.comment-votes div {
+  color: var(--moderate-blue);
+  font-weight: 500;
+
+  display: grid;
+  place-items: center center;
+}
+
+.comment-user {
+  grid-area: user;
+  display: flex;
+  align-items: center;
+}
+
+.comment-user img {
+  height: 40px;
+}
+
+.comment-actions {
+  grid-area: actions;
+}
+
+.comment-content {
+  grid-area: content;
+}
+
+@media screen and (max-width: 500px) {
+  .comment-wrapper {
+    display: grid;
+    grid-template-areas: "user user" "content content" "votes actions";
+    grid-template-columns: 70px 1fr;
+    grid-template-rows: auto auto 30px;
+  }
+
+  .comment-votes {
+    flex-direction: row;
+  }
+}

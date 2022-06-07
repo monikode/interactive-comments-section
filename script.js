@@ -26,14 +26,39 @@ function loadComments(element, list) {
     }
 
     const li = document.createElement("li");
+    const commentWrapper = document.createElement("div");
+    commentWrapper.classList.add("comment-wrapper");
+    commentWrapper.classList.add("white-card");
     element.append(li);
+    li.append(commentWrapper);
 
     if (item.editMode === true) {
       li.append(editReplyElement(item));
     } else {
+      const votes = document.createElement("div");
+      const votesUp = document.createElement("button");
+      votesUp.innerText = "+";
+      const votesNumber = document.createElement("div");
+      votesNumber.innerText = 0;
+      const votesDown = document.createElement("button");
+      votesDown.innerText = "-";
+
+      votes.append(votesUp);
+      votes.append(votesNumber);
+      votes.append(votesDown);
+      votes.classList.add("comment-votes");
+
+      const user = document.createElement("div");
       const avatar = document.createElement("img");
+      const createdAt = document.createElement("div");
+      createdAt.innerText = item.createdAt;
+      user.classList.add("comment-user");
+      user.append(avatar);
+      user.append(createdAt);
+
       avatar.src = "assets/" + item.user.image.png;
       const actions = document.createElement("div");
+      actions.classList.add("comment-actions");
 
       if (item.user.username == currentUser.username) {
         const buttonEdit = document.createElement("button");
@@ -59,14 +84,17 @@ function loadComments(element, list) {
         actions.append(buttonReply);
       }
       const content = document.createElement("div");
+      content.classList.add("comment-content");
       content.innerText = item.content;
 
       const replyArea = document.createElement("div");
       replyArea.classList.add("reply-area");
+      replyArea.classList.add("white-card");
 
-      li.append(avatar);
-      li.append(actions);
-      li.append(content);
+      commentWrapper.append(votes);
+      commentWrapper.append(user);
+      commentWrapper.append(actions);
+      commentWrapper.append(content);
       li.append(replyArea);
 
       if (item.replies && item.replies.length > 0) {
@@ -90,8 +118,6 @@ const activeReply = (element, comment) => {
       replyArea.innerHTML = "";
     };
     replyArea.append(buttonSend);
-  } else {
-    alert("ja tem");
   }
 };
 
